@@ -15,7 +15,11 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-export function AdminNav() {
+interface AdminNavProps {
+  onNavigate?: () => void
+}
+
+export function AdminNav({ onNavigate }: AdminNavProps) {
   const pathname = usePathname()
 
   const navItems = [
@@ -29,7 +33,7 @@ export function AdminNav() {
   ]
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-card">
       <div className="p-6 border-b border-border">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
@@ -49,6 +53,7 @@ export function AdminNav() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={onNavigate}
               className={cn(
                 "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
                 isActive

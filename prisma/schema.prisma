@@ -20,7 +20,12 @@ enum Role {
   CLIENT
 }
 
-
+enum ProjectStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
 // MODEL
 model User{
  id Int @id @default(autoincrement())
@@ -28,4 +33,18 @@ model User{
   email       String      @unique
   password    String
   role        Role
+    createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // projectsAsFreelancer  Project[]
+
+
+}
+
+model project{
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  due_date DateTime 
+  createdAt DateTime @default(now())
+  status ProjectStatus
 }

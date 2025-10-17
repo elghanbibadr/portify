@@ -33,10 +33,14 @@ export default function RegisterPage() {
     password: ""
   })
 
+  const [isSubmiting,setIsSubmiting]=useState(false)
+
   const handleSubmit =async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setIsSubmiting(true)
     console.log("submitted")
     await register(formData)
+    setIsSubmiting(false)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,8 +147,8 @@ export default function RegisterPage() {
               />
             </div>
 
-            <Button type="submit" className="w-full" size="lg">
-              Create Account
+            <Button disabled={isSubmiting} type="submit" className="w-full" size="lg">
+              {isSubmiting ? "creating ..." : "Create Account"}
             </Button>
           </CardContent>
         </form>

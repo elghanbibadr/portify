@@ -31,6 +31,8 @@ export const authConfig: NextAuthConfig = {
           user.password
         );
 
+        console.log("password match",passwordMatch)
+
         if (!passwordMatch) {
           return null;
         }

@@ -3,8 +3,18 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { login } from "../actions/actions"
 
 export default function LoginPage() {
+  // async function handleAction(formData: FormData) {
+  //   console.log("form data",formData);
+  //   try {
+  //     await login(formData)
+  //   } catch (err: any) {
+  //   console.log("error",err.message)
+  //   }
+  // }
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-muted/30 p-4">
       <Card className="w-full max-w-md">
@@ -17,10 +27,10 @@ export default function LoginPage() {
           <CardTitle className="text-2xl text-center">Welcome back</CardTitle>
           <CardDescription className="text-center">Enter your credentials to access your account</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <form  action={login} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="name@example.com" />
+            <Input required name='email' id="email" type="email" placeholder="name@example.com" />
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -29,15 +39,15 @@ export default function LoginPage() {
                 Forgot password?
               </Link>
             </div>
-            <Input id="password" type="password" />
+            <Input required name="password" id="password" type="password" />
           </div>
-          <Button className="w-full" size="lg">
+          <Button type="submit" className="w-full" size="lg">
             Sign In
           </Button>
-        </CardContent>
+        </form>
         <CardFooter className="flex flex-col space-y-4">
           <div className="text-sm text-center text-muted-foreground">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/register" className="text-primary hover:underline font-medium">
               Sign up
             </Link>

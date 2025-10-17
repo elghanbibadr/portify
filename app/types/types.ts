@@ -1,5 +1,5 @@
 
-export type UserRole = "freelancer" | "client"
+export type UserRole = "FREELANCER" | "CLIENT"
 
 
 export type RegisterFormData = {
@@ -7,6 +7,6 @@ export type RegisterFormData = {
   last_name: string
   email: string
   company: string
-  role: UserRole | ""
+  role: UserRole 
   password: string
 }

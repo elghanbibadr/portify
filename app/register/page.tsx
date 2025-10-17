@@ -28,7 +28,7 @@ export default function RegisterPage() {
     last_name: "",
     email: "",
     company: "",
-    role: "",
+    role: "FREELANCER",
     password: ""
   })
 

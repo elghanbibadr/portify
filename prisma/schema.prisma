@@ -14,10 +14,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-enum Role {
-  ADMIN
+enum UserRole {
   CLIENT
+  FREELANCER
 }
 
 enum ProjectStatus {
@@ -26,25 +25,30 @@ enum ProjectStatus {
   COMPLETED
   CANCELLED
 }
+
 // MODEL
-model User{
- id Int @id @default(autoincrement())
- fullName String 
-  email       String      @unique
-  password    String
-  role        Role
-    createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  // projectsAsFreelancer  Project[]
-
-
+model User {
+  id                   Int       @id @default(autoincrement())
+  fullName             String
+  email                String    @unique
+  password             String
+  role                 UserRole
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  projectsAsFreelancer Project[] @relation("FreelancerProjects")
+  projectsAsClient     Project[] @relation("ClientProjects")
 }
 
-model project{
-  id Int @id @default(autoincrement())
-  title String
-  description String
-  due_date DateTime 
-  createdAt DateTime @default(now())
-  status ProjectStatus
+model Project {
+  id           Int           @id @default(autoincrement())
+  title        String
+  description  String
+  due_date     DateTime
+  createdAt    DateTime      @default(now())
+  status       ProjectStatus
+  freelancer   User          @relation("FreelancerProjects", fields: [freelancerId], references: [id])
+  freelancerId Int
+
+  client   User @relation("ClientProjects", fields: [clientId], references: [id])
+  clientId Int
 }

@@ -25,13 +25,13 @@ export async function register(RegisterData: RegisterFormData) {
         fullName: RegisterData.first_name + RegisterData.last_name,
         email: RegisterData.email,
         password: hashedPassword, // Make sure to hash the password!
-        role: RegisterData.role, // or "ADMIN"
+        role: 'CLIENT', // or "ADMIN"
       },
     });
 
-    console.log("User created:", user);
-  } catch (e) {
-    console.log("error", e);
+    console.log("User created:", user.createdAt);
+  } catch (error) {
+    console.log("something went wrong")
+    console.log("error", error.message);
   }
-  console.log("register data", RegisterData);
 }

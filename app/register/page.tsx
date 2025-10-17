@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select"
 import { FormEvent, useState } from "react"
 import { RegisterFormData, UserRole } from "../types/types"
+import { register } from "../actions/actions"
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState<RegisterFormData>({
@@ -32,9 +33,10 @@ export default function RegisterPage() {
     password: ""
   })
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit =async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log("submitted")
+    await register(formData)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +47,6 @@ export default function RegisterPage() {
     }))
    
 
-    console.log("value",value)
   }
 
   return (

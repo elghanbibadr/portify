@@ -1,13 +1,11 @@
 import { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@/lib/generated/prisma";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
 export const authConfig: NextAuthConfig = {
-  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -37,8 +35,9 @@ export const authConfig: NextAuthConfig = {
           return null;
         }
 
+        // ✅ Convert Int ID to String for NextAuth
         return {
-          id: user.id,
+          id: String(user.id),  // Convert number to string
           email: user.email,
           name: user.fullName,
           role: user.role,
@@ -56,14 +55,14 @@ export const authConfig: NextAuthConfig = {
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role;
-        token.id = user.id;
+        token.id = user.id; // This will be a string now
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.role = token.role as string;
-        session.user.id = token.id as string;
+        session.user.id = token.id as string; // String ID
       }
       return session;
     },

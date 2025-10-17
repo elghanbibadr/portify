@@ -13,7 +13,7 @@ export default auth((req) => {
   // Redirect logged-in users away from login/register pages
   if (isLoggedIn && (pathname === "/login" || pathname === "/register")) {
     const dashboardRoute =
-      session.user.role === "FREELANCER" 
+      session.user?.role === "FREELANCER" 
         ? "/admin/dashboard"
         : "/client/dashboard";
     return NextResponse.redirect(new URL(dashboardRoute, req.nextUrl));
@@ -29,7 +29,7 @@ export default auth((req) => {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 
-  const userRole = session.user.role;
+  const userRole = session.user?.role;
 
   // Admin routes - only FREELANCER and ADMIN can access
   if (pathname.startsWith("/admin")) {

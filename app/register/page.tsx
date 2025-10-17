@@ -20,9 +20,10 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import { FormEvent, useState } from "react"
+import { RegisterFormData, UserRole } from "../types/types"
 
 export default function RegisterPage() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<RegisterFormData>({
     first_name: "",
     last_name: "",
     email: "",
@@ -33,7 +34,7 @@ export default function RegisterPage() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log("submitted", formData)
+    console.log("submitted")
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +43,7 @@ export default function RegisterPage() {
       ...prev,
       [name]: value
     }))
+   
 
     console.log("value",value)
   }
@@ -112,8 +114,9 @@ export default function RegisterPage() {
             <div className="space-y-2">
               <Label htmlFor="role">I am a</Label>
               <Select
+              defaultValue="client"
                 value={formData.role}
-                onValueChange={(value) =>
+                onValueChange={(value:UserRole) =>
                   setFormData((prev) => ({ ...prev, role: value }))
                 }
               >

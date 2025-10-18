@@ -2,9 +2,10 @@
 
 import { PrismaClient } from "@/lib/generated/prisma";
 import { RegisterFormData } from "../types/types";
+
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
-import { signIn, signOut } from "@/lib/auth-helper";
+import { auth, signIn, signOut } from "@/lib/auth-helper";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { AuthError } from "next-auth";
 
@@ -115,4 +116,20 @@ export async function login(formData: FormData) {
 export async function logout() {
   await signOut({ redirect: false });
   redirect("/login");
+}
+
+
+
+
+// GET TOTAL PROJECTS FOR A FREELANCER
+export async function getFreelancerProjects() {
+  const session=await auth()
+  const freelancerId=Number(session?.user.id) 
+
+  const projects=await prisma.project.findMany({
+    where:{id:freelancerId}
+  })
+
+  console.log("projects",projects)
+    
 }

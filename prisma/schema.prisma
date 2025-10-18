@@ -25,6 +25,11 @@ enum ProjectStatus {
   COMPLETED
   CANCELLED
 }
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
 
 // MODEL
 model User {
@@ -45,10 +50,33 @@ model Project {
   description  String
   due_date     DateTime
   createdAt    DateTime      @default(now())
+  budget String
   status       ProjectStatus
   freelancer   User          @relation("FreelancerProjects", fields: [freelancerId], references: [id])
   freelancerId Int
-
   client   User @relation("ClientProjects", fields: [clientId], references: [id])
   clientId Int
+
+  ProjectDocuments Document[] @relation("ProjectDocuments")
+
+  ProjectTask Task[] @relation("ProjectTasks")
+}
+
+
+model Document{
+  id Int @id @default(autoincrement())
+  name String
+  project Project @relation("ProjectDocuments" ,fields: [projectId],references: [id])
+  projectId Int
+}
+
+model Task{
+  id Int @id @default(autoincrement())
+  name String
+  status TaskStatus
+  project Project @relation("ProjectTasks" ,fields: [projectId],references: [id])
+  projectId Int
+  createdAt  DateTime  @default(now())
+  due_date DateTime
+
 }

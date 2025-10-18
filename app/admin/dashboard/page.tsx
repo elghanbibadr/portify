@@ -3,8 +3,13 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Users, FolderKanban, FileText, CreditCard, TrendingUp, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
+import { getCurrentUser, getFreelancerProjects } from "@/app/actions/actions"
+import { auth } from "@/lib/auth-helper"
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
+  const freelancerProjects=await getFreelancerProjects()
+
+  console.log("projects" ,freelancerProjects)
   return (
     <div className="p-6 md:p-8 space-y-8">
       <div className="flex items-center justify-between">

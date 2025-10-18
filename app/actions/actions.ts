@@ -114,6 +114,7 @@ export async function login(formData: FormData) {
 
 // ========== LOGOUT ACTION ==========
 export async function logout() {
+  console.log("yoo")
   await signOut({ redirect: false });
   redirect("/login");
 }
@@ -125,6 +126,9 @@ export async function logout() {
 export async function getFreelancerProjects() {
   const session=await auth()
   const freelancerId=Number(session?.user.id) 
+
+  console.log("session",session)
+
 
   const projects=await prisma.project.findMany({
     where:{id:freelancerId}

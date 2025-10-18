@@ -14,6 +14,7 @@ import {
   LogOut,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { logout } from "@/app/actions/actions"
 
 interface AdminNavProps {
   onNavigate?: () => void
@@ -68,11 +69,11 @@ export function AdminNav({ onNavigate }: AdminNavProps) {
         })}
       </nav>
       <div className="p-4 border-t border-border">
-        <Button variant="ghost" className="w-full justify-start text-muted-foreground" asChild>
-          <Link href="/login">
-            <LogOut className="h-4 w-4 mr-3" />
+        <Button onClick={logout} variant="ghost" className="w-full justify-start text-muted-foreground" >
+          {/* <Link href="/login"> */}
+            <LogOut  className="h-4 w-4 mr-3" />
             Log out
-          </Link>
+          {/* </Link> */}
         </Button>
       </div>
     </div>

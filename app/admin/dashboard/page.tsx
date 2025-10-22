@@ -3,13 +3,14 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Users, FolderKanban, FileText, CreditCard, TrendingUp, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
-import { getCurrentUser, getFreelancerProjects } from "@/app/actions/actions"
+import {  getFreelancerProjectsAndClients } from "@/app/actions/actions"
 import { auth } from "@/lib/auth-helper"
 
 export default async function AdminDashboard() {
-  const freelancerProjects=await getFreelancerProjects()
+  const {freelancerActiveProjects , FreealancerTotalClient}=await getFreelancerProjectsAndClients()
 
-  console.log("projects" ,freelancerProjects)
+  console.log("active projects" ,freelancerActiveProjects)
+  console.log("total client",FreealancerTotalClient)
   return (
     <div className="p-6 md:p-8 space-y-8">
       <div className="flex items-center justify-between">
@@ -30,7 +31,7 @@ export default async function AdminDashboard() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">24</div>
+            <div className="text-2xl font-bold">{FreealancerTotalClient}</div>
             <p className="text-xs text-muted-foreground flex items-center gap-1">
               <TrendingUp className="h-3 w-3 text-green-600" />
               <span className="text-green-600">+12%</span> from last month
@@ -43,7 +44,7 @@ export default async function AdminDashboard() {
             <FolderKanban className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">18</div>
+            <div className="text-2xl font-bold">{freelancerActiveProjects.length}</div>
             <p className="text-xs text-muted-foreground flex items-center gap-1">
               <TrendingUp className="h-3 w-3 text-green-600" />
               <span className="text-green-600">+8%</span> from last month

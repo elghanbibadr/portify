@@ -123,17 +123,28 @@ export async function logout() {
 
 
 // GET TOTAL PROJECTS FOR A FREELANCER
-export async function getFreelancerProjects() {
+export async function getFreelancerProjectsAndClients() {
   const session=await auth()
   const freelancerId=Number(session?.user.id) 
 
   console.log("session",session)
 
+  // GET ALL FREELANCER PROJECTS
 
   const projects=await prisma.project.findMany({
-    where:{id:freelancerId}
+    where:{freelancerId:freelancerId}
   })
 
+  // COUNT THE NUMBER OF ACTIVE PROJECTS
+  const freelancerActiveProjects=projects.filter(project => project.status==="IN_PROGRESS") ;
+  const FreealancerTotalClient=[
+  ...new Map(projects.map(project => [project.clientId, project])).values()
+].length ;
+
+console.log("freelancer total client",FreealancerTotalClient)
+
   console.log("projects",projects)
+
+  return {freelancerActiveProjects , FreealancerTotalClient}
     
 }
